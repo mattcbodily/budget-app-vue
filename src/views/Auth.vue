@@ -1,12 +1,14 @@
 <template>
     <h1>Welcome</h1>
-    <input v-model='firstName'/>
-    <input v-model='lastName'/>
+    <input v-if='registerView' v-model='firstName'/>
+    <input v-if='registerView' v-model='lastName'/>
     <input v-model='email'/>
     <input v-model='password'/>
-    <input v-model='verPassword'/>
+    <input v-if='registerView' v-model='verPassword'/>
     <button v-on:click='login'>Log In</button>
-    <button v-on:click='register'>Register</button>
+    <button v-if='registerView' v-on:click='register'>Register</button>
+    <p v-if='registerView'>Have an account? <span v-on:click='toggleView(false)'>Sign in here</span></p>
+    <p v-else>Don't have an account? <span v-on:click='toggleView(true)'>Register here</span></p>
 </template>
 
 <script>
@@ -19,7 +21,8 @@ export default {
             lastName: '',
             email: '',
             password: '',
-            verPassword: ''
+            verPassword: '',
+            registerView: false
         }
     },
     methods: {
@@ -27,6 +30,7 @@ export default {
             axios.post('/api/login', {email: this.email, password: this.password})
             .then(res => {
                 console.log(res)
+                this.router.push({path: 'Dash'});
             })
             .catch(err => console.log(err))
         },
@@ -35,9 +39,13 @@ export default {
                 axios.post('/api/register', {firstName: this.firstName, lastName: this.lastName, email: this.email, password: this.password})
                 .then(res => {
                     console.log(res)
+                    this.router.push({path: 'Dash'});
                 })
                 .catch(err => console.log(err));
             }
+        },
+        toggleView: function(val){
+            this.registerView = val;
         }
     }
 }

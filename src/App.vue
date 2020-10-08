@@ -1,8 +1,4 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Auth</router-link> |
-    <router-link to="/dash">Dash</router-link>
-  </div>
   <router-view/>
 </template>
 
