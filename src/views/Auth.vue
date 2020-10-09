@@ -29,8 +29,7 @@ export default {
         login: function(){
             axios.post('/api/login', {email: this.email, password: this.password})
             .then(res => {
-                console.log(res)
-                this.router.push({path: 'Dash'});
+                this.$router.push({path: `/dash/${res.data.user_id}`});
             })
             .catch(err => console.log(err))
         },
@@ -38,8 +37,7 @@ export default {
             if(this.password && this.password === this.verPassword){
                 axios.post('/api/register', {firstName: this.firstName, lastName: this.lastName, email: this.email, password: this.password})
                 .then(res => {
-                    console.log(res)
-                    this.router.push({path: 'Dash'});
+                    this.$router.push({path: `/dash/${res.data.user_id}`});
                 })
                 .catch(err => console.log(err));
             }
